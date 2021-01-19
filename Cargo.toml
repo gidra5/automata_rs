@@ -1,0 +1,18 @@
+[package]
+name = "automata"
+version = "0.1.0"
+authors = ["Roman Khranovskiy <hranitel.52@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+automata_macro = { path = "src/automata_macro" }
+
+[[bin]]
+name = "macro"
+path = "examples/example_macro/src/main.rs"
+
+[[bin]]
+name = "plain"
+path = "examples/example_plain/src/main.rs"
