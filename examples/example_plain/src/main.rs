@@ -17,8 +17,8 @@ impl Automata<'_> for MyAutomata {
         }
     }
 
-    fn transition_table(state: &mut Self, input: &Self::Input) {
-        *state = match (&state, input) {
+    fn transition_table(state: &Self, input: &Self::Input) -> Self {
+        match (state, input) {
             _ => Self::State1
         }
     }

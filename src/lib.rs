@@ -7,10 +7,10 @@ pub trait Automata<'a> {
 
   fn output_table(state: &Self, input: &Self::Input) -> Self::Output;
 
-  fn transition_table(state: &mut Self, input: &Self::Input);
+  fn transition_table(state: &Self, input: &Self::Input) -> Self;
 
-  fn transition(&'a mut self, x: Self::Input) -> Self::Output {
-    Self::transition_table(self, &x);
+  fn transition(&'a mut self, x: Self::Input) -> Self::Output where Self: Sized {
+    *self = Self::transition_table(self, &x);
 
     Self::output_table(self, &x)
   }
