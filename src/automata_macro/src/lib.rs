@@ -13,11 +13,11 @@ struct AnonymousEnum(Punctuated<Variant, Token![,]>);
 impl Parse for AnonymousEnum {
     fn parse(input: ParseStream) -> Result<Self> {
         let inner;
-        
+
         braced!(inner in input);
 
         let items = Punctuated::<Variant, Token![,]>::parse_terminated(&inner)?;
-        
+
         Ok(Self(items))
     }
 }
@@ -31,7 +31,7 @@ impl Parse for AnonymousStruct {
         braced!(inner in input);
 
         let items = Punctuated::<FieldValue, Token![,]>::parse_terminated(&inner)?;
-        
+
         Ok(AnonymousStruct(items))
     }
 }
@@ -54,13 +54,7 @@ impl Parse for AnonymousTypeOrTypeName {
             Ok(AnonymousTypeOrTypeName::Struct(input.parse::<AnonymousStruct>().unwrap()))
         } else { //if lookahead.peek(Ident)
             Ok(AnonymousTypeOrTypeName::Type(input.parse::<Ident>().unwrap()))
-        } 
-
-        // Ok(match input.parse::<Ident>().unwrap().to_string().as_str() {
-        //     "enm"      => AnonymousTypeOrTypeName::Enum(    input.parse::<AnonymousEnum>()  .unwrap()),
-        //     "strct"    => AnonymousTypeOrTypeName::Struct(  input.parse::<AnonymousStruct>().unwrap()),
-        //     _           => AnonymousTypeOrTypeName::Type(    input.parse::<Ident>()          .unwrap())
-        // })
+        }
     }
 }
 
@@ -77,8 +71,8 @@ impl Parse for Declaration {
     fn parse(input: ParseStream) -> Result<Self> {
         let inner;
         let name = input.parse::<Ident>()?;
-        
-        braced!(inner in input); 
+
+        braced!(inner in input);
 
         let mut state = None;
         let mut input_type = None;
@@ -99,12 +93,12 @@ impl Parse for Declaration {
         }
 
         Ok(Declaration {
-            name, 
-            state: state.unwrap(), 
-            input_type: input_type.unwrap(), 
-            output_type: output_type.unwrap(), 
-            output_table: output_table.unwrap(), 
-            translation_table: translation_table.unwrap()
+            name,
+            state: state.expect("No type for the state of automata is defined"),
+            input_type: input_type.expect("No type for the input of automata is defined"),
+            output_type: output_type.expect("No type for the output of automata is defined"),
+            output_table: output_table.expect("No output table for automata is defined"),
+            translation_table: translation_table.expect("No transition table for automata is defined")
         })
     }
 }
