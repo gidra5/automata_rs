@@ -3,6 +3,7 @@ name = "automata"
 version = "0.1.0"
 authors = ["Roman Khranovskiy <hranitel.52@gmail.com>"]
 edition = "2018"
+repository = "https://github.com/gidra5/automata_rs.git"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
